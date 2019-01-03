@@ -150,7 +150,7 @@ npm run start
 
 ### Deploying to Render
 
-See https://render.com/docs/deploying-puppeteer/
+See https://render.com/docs/deploy-puppeteer-node/
 
 
 ### Deploying using Docker
