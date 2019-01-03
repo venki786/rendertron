@@ -3,7 +3,7 @@
 > Rendertron is a headless Chrome rendering solution designed to render & serialise web pages on the fly.
 
 #### :hammer: Built with [Puppeteer](https://github.com/GoogleChrome/puppeteer)
-#### :cloud: Easy deployment to Google Cloud
+#### :cloud: Easy deployment to Render
 #### :mag: Improves SEO
 
 Rendertron is designed to enable your Progressive Web App (PWA) to serve the correct
@@ -16,7 +16,7 @@ Rendertron is compatible with all client side technologies, including [web compo
 
 **Demo endpoint**
 
-A demo Rendertron service is available at https://render-tron.appspot.com/. It is not designed
+A demo Rendertron service is available at https://rendertron.app.render.com/. It is not designed
 to be used as a production endpoint. You can use it, but there are no uptime guarantees.
 
 ## Contents
@@ -33,7 +33,7 @@ to be used as a production endpoint. You can use it, but there are no uptime gua
 - [Installing & deploying](#installing--deploying)
   - [Building](#building)
   - [Running locally](#running-locally)
-  - [Deploying to Google Cloud Platform](#deploying-to-google-cloud-platform)
+  - [Deploying to Render](#deploying-to-render)
   - [Deploying using Docker](#deploying-using-docker)
   - [Config](#config)
   - [Troubleshooting](#troubleshooting)
@@ -88,7 +88,7 @@ for available options. You cannot specify the `type` (defaults to `jpeg`) and
 When setting query parameters as part of your URL, ensure they are encoded correctly. In JS,
 this would be `encodeURIComponent(myURLWithParams)`. For example to specify `page=home`:
 ```
-https://render-tron.appspot.com/render/http://my.domain/%3Fpage%3Dhome
+https://rendertron.app.render.com/render/http://my.domain/%3Fpage%3Dhome
 ```
 
 ### Auto detecting loading function
@@ -148,10 +148,10 @@ With a local instance of Chrome installed, you can start the server locally:
 npm run start
 ```
 
-### Deploying to Google Cloud Platform
-```
-gcloud app deploy app.yaml --project <your-project-id>
-```
+### Deploying to Render
+
+See https://render.com/docs/deploying-puppeteer/
+
 
 ### Deploying using Docker
 Rendertron no longer includes a Docker file. Instead, refer to
