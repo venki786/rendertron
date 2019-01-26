@@ -88,7 +88,7 @@ for available options. You cannot specify the `type` (defaults to `jpeg`) and
 When setting query parameters as part of your URL, ensure they are encoded correctly. In JS,
 this would be `encodeURIComponent(myURLWithParams)`. For example to specify `page=home`:
 ```
-https://rendertron.app.render.com/render/http://my.domain/%3Fpage%3Dhome
+https://rendertron.onrender.com/render/http://my.domain/%3Fpage%3Dhome
 ```
 
 ### Auto detecting loading function
