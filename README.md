@@ -16,7 +16,7 @@ Rendertron is compatible with all client side technologies, including [web compo
 
 **Demo endpoint**
 
-A demo Rendertron service is available at https://rendertron.app.render.com/. It is not designed
+A demo Rendertron service is available at https://rendertron.onrender.com/. It is not designed
 to be used as a production endpoint. You can use it, but there are no uptime guarantees.
 
 ## Contents
