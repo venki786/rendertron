@@ -29,8 +29,8 @@ export type Config = {
     datastoreCache: boolean;
     timeout: number;
     port: string;
-    width: number;
-    height: number;
+    width:number;
+    height:number;
 };
 
 export class ConfigManager {
