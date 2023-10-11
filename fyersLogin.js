@@ -260,7 +260,7 @@ async function run() {
                 async.forever(function (next) {
                     (async function () {
                         const ch = Number(moment().format("HH"));
-                        if (ch >= 4 && ch <= 16) {
+                        if (ch >= 0 && ch <= 23) {
                             try {
                                 const signalsResponse = await apiClient.getSignals(loginResponse.msg.user_id, "", "", "", "");
                                 console.log(moment().format("DD-MM-YYYY HH:mm:ss:SSS"), signalsResponse.signals.length);
