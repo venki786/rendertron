@@ -6,9 +6,11 @@ import dotenv from "dotenv";
 import express from 'express';
 import http from 'http';
 import Chromium from "@sparticuz/chromium";
+import async from 'async';
 
 import FyersScript from "./scripts/fyers.js";
 import { sleep } from "./scripts/utils.js";
+import APIClient from './scripts/goalgoClient.js';
 
 import { Low, JSONFile } from 'lowdb';
 import { join, dirname } from "path";
@@ -62,7 +64,7 @@ async function job({
         // defaultViewport: Chromium.defaultViewport   
     });
 
-    console.log({exPath: await Chromium.executablePath});
+    console.log({ exPath: await Chromium.executablePath });
 
     try {
         const [first, second, third, fourth] = pin.split("");
@@ -110,7 +112,7 @@ async function job({
 
         await page.focus('#otp-container > #sixth');
         await page.type('#otp-container > #sixth', totpsixth);
-        
+
         await sleep(5);
 
         await page.waitForSelector('#confirmOtpSubmit', { timeout: 30000 });
@@ -231,6 +233,50 @@ async function run() {
         try {
             ExecuteFyerLoginJob().catch(console.error);
         } catch (e) { console.log(e); }
+
+        try {
+            const apiClient = new APIClient();
+            // const loginResponse = await apiClient.login("Venkateswarlu", "Venkat@8081");
+            const loginResponse = await apiClient.login("maneeshag", "SiddiqKarna");
+            
+            if (loginResponse.success === "true") {
+                await apiClient.getProfile(loginResponse.msg.user_id);
+
+                async.forever(function (next) {
+                    (async function () {
+                        try {
+                            const ch = Number(moment().format("HH"));
+                            if (ch >= 4 && ch <= 16) {
+                                await apiClient.getLoginStatus(loginResponse.msg.user_id);
+                                await fetch('https://fy-qw33.onrender.com/fyers_login');
+                            }
+                        } catch (e) { console.log(e, moment().format("DD-MM-YYYY HH:mm:ss:SSS")); }
+                        setTimeout(next, 6000); // Wait for 6 seconds before the next iteration
+                    })();
+                }, function (err) {
+                    console.error('Error3:', err, moment().format("DD-MM-YYYY HH:mm:ss:SSS"));
+                });
+                // Schedule the getSignals function every few seconds while the current hour is between 9 and 16
+                async.forever(function (next) {
+                    (async function () {
+                        const ch = Number(moment().format("HH"));
+                        if (ch >= 4 && ch <= 16) {
+                            try {
+                                const signalsResponse = await apiClient.getSignals(loginResponse.msg.user_id, "", "", "", "");
+                                console.log(moment().format("DD-MM-YYYY HH:mm:ss:SSS"), signalsResponse.signals.length);
+                            } catch (e) { console.log(e, moment().format("DD-MM-YYYY HH:mm:ss:SSS")); }
+                            setTimeout(next, 3000); // Wait for 5 milli seconds before the next iteration
+                        } else {
+                            setTimeout(next, 60 * 1000); // Wait for 60 seconds before the next iteration
+                        }
+                    })();
+                }, function (err) {
+                    console.error('Error2:', err, moment().format("DD-MM-YYYY HH:mm:ss:SSS"));
+                });
+            }
+        } catch (error) {
+            console.error('Error1:', error, moment().format("DD-MM-YYYY HH:mm:ss:SSS"));
+        }
     });
 }
 
