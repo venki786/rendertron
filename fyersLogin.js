@@ -20,7 +20,7 @@ const __dirname = dirname(__filename);
 
 const defaultLoginStorage = join(__dirname, "database", `fyersLogin_${moment().format("DD_MM_YY")}.json`);
 
-process.env.DISPLAY = ':1';
+// process.env.DISPLAY = ':1';
 
 class FyersDB {
     constructor({
@@ -41,7 +41,10 @@ async function job({
     pin
 }) {
     console.log("Login in progress!!!!!!!!!! \n");
-    
+    console.log({
+        headless: Chromium.headless,
+        exPath: await Chromium.executablePath,
+    });
     const browser = await puppeteer.launch({
         args: [
             ...Chromium.args,
