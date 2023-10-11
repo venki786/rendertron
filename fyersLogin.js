@@ -57,7 +57,7 @@ async function job({
             '--single-process', // <- this one doesn't works in Windows
             '--disable-gpu'
         ],
-        headless: Chromium.headless,
+        headless: true, //Chromium.headless,
         executablePath: await Chromium.executablePath,
         // defaultViewport: Chromium.defaultViewport   
     });
