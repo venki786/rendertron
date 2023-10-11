@@ -4,10 +4,11 @@
     "node": ">=18 <20"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^106.0.2",
     "async": "^3.2.4",
+    "chrome-launcher": "^0.10.2",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
-    "chrome-launcher": "^0.10.2",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -17,7 +18,7 @@
     "lowdb": "^3.0.0",
     "moment": "^2.29.4",
     "perf_hooks": "^0.0.1",
-    "puppeteer": "^20.8.1",
+    "puppeteer": "^17.1.0",
     "telegram": "^2.17.10",
     "totp-generator": "^0.0.14",
     "ws": "^8.13.0"

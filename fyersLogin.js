@@ -5,6 +5,7 @@ import totp from "totp-generator";
 import dotenv from "dotenv";
 import express from 'express';
 import http from 'http';
+import Chromium from "@sparticuz/chromium";
 
 import FyersScript from "./scripts/fyers.js";
 import { sleep } from "./scripts/utils.js";
@@ -40,8 +41,10 @@ async function job({
     pin
 }) {
     console.log("Login in progress!!!!!!!!!! \n");
-    const options = {
+    
+    const browser = await puppeteer.launch({
         args: [
+            ...Chromium.args,
             '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
@@ -51,9 +54,10 @@ async function job({
             '--single-process', // <- this one doesn't works in Windows
             '--disable-gpu'
         ],
-        headless: false
-    }
-    const browser = await puppeteer.launch(options); // { headless: true }
+        headless: Chromium.headless,
+        executablePath: await Chromium.executablePath,
+        // defaultViewport: Chromium.defaultViewport   
+    });
 
     try {
         const [first, second, third, fourth] = pin.split("");
@@ -101,10 +105,13 @@ async function job({
 
         await page.focus('#otp-container > #sixth');
         await page.type('#otp-container > #sixth', totpsixth);
+        
+        await sleep(5);
 
-        await page.waitForSelector('#confirmOtpSubmit', { timeout: 10000 });
+        await page.waitForSelector('#confirmOtpSubmit', { timeout: 30000 });
+        await sleep(5);
         await page.click('#confirmOtpSubmit');
-
+        await sleep(5);
         // await page.screenshot({ path: 'v2.png' });
 
         await page.waitForSelector('#pin-container > #first', { timeout: 5000 });
@@ -160,11 +167,13 @@ async function job({
 
         fyersScript.auth_code = params.auth_code;
 
-        console.log(await fyersScript.generateAT());
+        await fyersScript.generateAT();
 
         FyersLoginDB.data.token = fyersScript.token;
         FyersLoginDB.data.tokenGeneratedAt = Date.now();
-
+        console.log({
+            v: FyersLoginDB.data
+        });
         await FyersLoginDB.write();
 
         console.log("\n Successfully Logged in......")
