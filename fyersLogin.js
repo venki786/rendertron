@@ -246,7 +246,7 @@ async function run() {
                     (async function () {
                         try {
                             const ch = Number(moment().format("HH"));
-                            if (ch >= 4 && ch <= 16) {
+                            if (ch >= 0 && ch <= 23) {
                                 await apiClient.getLoginStatus(loginResponse.msg.user_id);
                                 await fetch('https://fy-qw33.onrender.com/fyers_login');
                             }
