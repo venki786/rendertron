@@ -59,6 +59,8 @@ async function job({
         // defaultViewport: Chromium.defaultViewport   
     });
 
+    console.log({exPath: await Chromium.executablePath});
+
     try {
         const [first, second, third, fourth] = pin.split("");
 
