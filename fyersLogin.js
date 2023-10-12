@@ -242,13 +242,27 @@ async function run() {
             if (loginResponse.success === "true") {
                 await apiClient.getProfile(loginResponse.msg.user_id);
 
+
+                async.forever(function (next) {
+                    (async function () {
+                        try {
+                            const ch = Number(moment().format("HH"));
+                            if (ch >= 0 && ch <= 23) {
+                                await fetch('https://fy-qw33.onrender.com/fyers_login');
+                            }
+                        } catch (e) { console.log(e, moment().format("DD-MM-YYYY HH:mm:ss:SSS")); }
+                        setTimeout(next, 60 * 1000); // Wait for 6 seconds before the next iteration
+                    })();
+                }, function (err) {
+                    console.error('Error3:', err, moment().format("DD-MM-YYYY HH:mm:ss:SSS"));
+                });
+
                 async.forever(function (next) {
                     (async function () {
                         try {
                             const ch = Number(moment().format("HH"));
                             if (ch >= 0 && ch <= 23) {
                                 await apiClient.getLoginStatus(loginResponse.msg.user_id);
-                                await fetch('https://fy-qw33.onrender.com/fyers_login');
                             }
                         } catch (e) { console.log(e, moment().format("DD-MM-YYYY HH:mm:ss:SSS")); }
                         setTimeout(next, 6000); // Wait for 6 seconds before the next iteration
