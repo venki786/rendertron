@@ -277,7 +277,7 @@ async function run() {
                         if (ch >= 0 && ch <= 23) {
                             try {
                                 const signalsResponse = await apiClient.getSignals(loginResponse.msg.user_id, "", "", "", "");
-                                console.log(moment().format("DD-MM-YYYY HH:mm:ss:SSS"), signalsResponse.signals.length);
+                                console.log(moment().format("DD-MM-YYYY HH:mm:ss:SSS"), signalsResponse?.signals.length);
                             } catch (e) { console.log(e, moment().format("DD-MM-YYYY HH:mm:ss:SSS")); }
                             setTimeout(next, 3000); // Wait for 5 milli seconds before the next iteration
                         } else {
